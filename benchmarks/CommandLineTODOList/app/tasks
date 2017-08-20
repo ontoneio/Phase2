@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+'use strict'
+
+const { setState } = require('./states/jsonStates.js');
+const setInitialState = require('./states/setInitialState.js');
+const addNewItem = require('./add.js');
+const listIncompleteItems = require('./list.js');
+const completeTask = require('./complete.js');
+const deleteTask = require('./delete.js');
+
+//Create and Initialize tasks.json if it does not exist
+if(!require('fs').existsSync('./tasks.json'))
+  setInitialState();
+
+let command = process.argv[2];
+let argument = process.argv[3];
+
+switch(command) {
+  case 'list': 
+    listIncompleteItems();
+  break;
+  case 'add': 
+    if(argument !== undefined)
+      addNewItem(argument) 
+  break;
+  case 'complete': 
+    completeTask(argument);
+  break;
+  case 'delete':
+    deleteTask(argument); 
+  break;
+  default: 
+  console.log('Invalid Command!');
+  break;
+}  
+
+
