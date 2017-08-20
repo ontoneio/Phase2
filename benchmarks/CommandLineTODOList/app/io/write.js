@@ -1,4 +1,9 @@
 "use strict"
-module.exports = (fileName, object) => 
-  require('fs').writeFileSync(fileName, JSON.stringify(object))
+const fs = require('fs')
+
+module.exports = (fileName, object) => {
+
+};
+
+fs.writeFile(fileName, JSON.stringify(object))
 
