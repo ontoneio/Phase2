@@ -6,7 +6,6 @@ const {
 
 module.exports = (item, callback) => {
   getState().then((tasks) => {
-    // let tasks = getState()
     tasks.currentId += 1
     tasks.incompleteTasks.push({
       'id': tasks.currentId,
@@ -17,5 +16,4 @@ module.exports = (item, callback) => {
     if (callback) callback(confirmMessage);
     console.log(confirmMessage);
   })
-
 }
