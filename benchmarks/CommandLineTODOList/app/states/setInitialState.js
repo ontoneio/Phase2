@@ -9,5 +9,6 @@ module.exports = () => {
     completeTasks: [],
     deletedTasks: [] 
   };
+  // setState(initialObject).then(() => 'Success!');
   setState(initialObject);
 } 

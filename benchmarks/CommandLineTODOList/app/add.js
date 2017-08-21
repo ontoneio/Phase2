@@ -1,12 +1,21 @@
 "use strict"
-const { getState, setState } = require('./states/jsonStates.js')
+const {
+  getState,
+  setState
+} = require('./states/jsonStates.js')
 
 module.exports = (item, callback) => {
-  let tasks = getState()
-  tasks.currentId += 1
-  tasks.incompleteTasks.push({'id': tasks.currentId, 'text': item})
-  setState(tasks)
-  let confirmMessage = `Created task ${tasks.currentId}`
-  if(callback) callback(confirmMessage);
-  console.log(confirmMessage);
+  getState().then((tasks) => {
+    // let tasks = getState()
+    tasks.currentId += 1
+    tasks.incompleteTasks.push({
+      'id': tasks.currentId,
+      'text': item
+    })
+    setState(tasks)
+    let confirmMessage = `Created task ${tasks.currentId}`
+    if (callback) callback(confirmMessage);
+    console.log(confirmMessage);
+  })
+
 }

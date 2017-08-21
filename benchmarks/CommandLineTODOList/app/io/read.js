@@ -1,20 +1,14 @@
 "use strict"
 const fs = require('fs')
 
+module.exports = (fileName) =>
+  new Promise((resolve, reject) => 
+    fs.readFile(fileName, (err, data) =>
+      err ? reject(err) : resolve(JSON.parse(data))))
 
-const readFromFile = (fileName) => {
-  let jsObj;
-  let promiseToReadFile  = new Promise((resolve, reject) => {
-    let json = fs.readFile(fileName)
-    resolve(json)
-  })
 
-  promiseToReadFile.then((json) => {
-    jsObj = JSON.parse(json);
-  })
+// module.exports = fileName => new Promise((resolve, reject) => resolve(JSON.parse(fs.readFile(fileName))))
 
-  return json;
-}
 
 
 
@@ -26,4 +20,4 @@ const readFromFile = (fileName) => {
   //   json = data;
   // });
 
-  exports.readFromFile = readFromFile
+  // exports.readFromFile = readFromFile

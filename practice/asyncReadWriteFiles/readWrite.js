@@ -1,16 +1,54 @@
 "use strict"
 const fs = require('fs')
 
-const readFromFile = (fileName) => {
-  let content;
-  fs.readFile('someText.txt', (err, data) => {
-  content = data.toString()
-  })
-  return content
-}
+// const readPromise = (fileName) => {
+//   return new Promise((resolve, reject) => {
+//     fs.readFile(fileName, (err, data) => {
+//     resolve(data.toString())
+//     })
+//   })
+// }
 
-let content = readFromFile('someText.txt')
-console.log(content);
+const readPromise = (fileName) =>
+  new Promise((resolve, reject) =>
+    fs.readFile(fileName, (err, data) =>
+      err ? reject(err) : resolve(data.toString())))
+
+// const writePromise = ((fileName, text) => {
+//   return new Promise((resolve, reject) => {
+//     fs.writeFile('newText.txt', 'A B C D X')
+//   })
+// })
+
+const writePromise = (fileName, object) =>
+  new Promise((reject, resolve) => {
+    fs.writeFile(fileName, 'I got you');})
+  
+
+readPromise('someText.txt').then((content) => {
+  console.log(content)
+})
+
+writePromise('newText.txt').then(() => {
+  console.log('success!')
+});
+
+
+// let output = readFromFile('someText.txt')
+// console.log(output);
+// .then((data) => console.log(data));
+
+
+// const readFromFile = (fileName) => {
+//   let content;
+//   fs.readFile('someText.txt', (err, data) => {
+//   content = data.toString()
+//   })
+//   return content
+// }
+
+// let content = readFromFile('someText.txt')
+// console.log(content);
 
 // fs.readFile('someText.txt', (err, data) => {
 //   console.log(data.toString())
