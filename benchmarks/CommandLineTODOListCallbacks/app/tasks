@@ -1,0 +1,5 @@
+#!/usr/bin/env node
+const getState = require('./states/getState.js')
+const setState = require('./states/setState.js')
+
+console.log('Hello from tasks.js')
