@@ -1,9 +1,10 @@
 const path = require('path')
 const pathToTask = path.resolve(__dirname, '../tasks.json')
-const readJSON = require('../io/readJSON.js')
+const readJSONFile = require('../io/readJSONFile.js')
+const setState = require('./setState.js')
 
 const getState = (callback) => {
-  readJSON(pathToTask, (err, data) => callback(err, data))
+  readJSONFile(pathToTask, callback)
 } 
 
 module.exports = getState;

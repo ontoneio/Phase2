@@ -2,4 +2,8 @@
 const getState = require('./states/getState.js')
 const setState = require('./states/setState.js')
 
-console.log('Hello from tasks.js')
+// check if the file exists 
+
+//Write a function to check if a file exists, if it doesn't create one 
+
+//To test the function, create a test that deletes the file if exists 

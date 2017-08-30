@@ -1,9 +1,9 @@
 const path = require('path')
 const pathToTask = path.resolve(__dirname, '../tasks.json')
-const writeJSON = require('../io/writeJSON.js')
+const writeJSONFile = require('../io/writeJSONFile.js')
 
 const setState = (newState, callback) => {
-  writeJSON(pathToTask, newState, (err) => {
+  writeJSONFile(pathToTask, newState, (err) => {
     if(callback) callback(err)
   })
 }

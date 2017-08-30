@@ -1,14 +1,14 @@
 const getState = require('./states/getState.js')
 const setState = require('./states/setState.js')
 
-const complete = (taskID, callback) => {
+const deleteX = (taskID, callback) => {
   getState((err, data) => {
     if (err) callback(err)
-    completeTaskIndex = data.incompleteTasks.findIndex(task => task.id === taskID)
-    if (completeTaskIndex === -1) {
+    deleteTaskIndex = data.incompleteTasks.findIndex(task => task.id === taskID)
+    if (deleteTaskIndex === -1) {
       callback(new Error('Task Not Found'))
     } else {
-      data.completeTasks.push(data.incompleteTasks.splice(completeTaskIndex, 1)[0])
+      data.deleteTasks.push(data.incompleteTasks.splice(deleteTaskIndex, 1)[0])
       setState(data, (err) => {
         if (err) throw err
         callback(null)
@@ -17,4 +17,4 @@ const complete = (taskID, callback) => {
   })
 }
 
-module.exports = complete;
+module.exports = deleteX;
