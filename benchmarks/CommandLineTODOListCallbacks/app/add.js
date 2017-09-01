@@ -1,5 +1,7 @@
 const getState = require('./states/getState')
 const setState = require('./states/setState')
+const checkJSONFileExists = require('./io/checkJSONFileExists.js')
+
 
 
 const add = (task, callback) => {
@@ -12,6 +14,7 @@ const add = (task, callback) => {
     })
     setState(data, function (err) {
       if (err) callback(err)
+      console.log(`Created Task ${data.currId}`)
       callback(null)
     })
   })

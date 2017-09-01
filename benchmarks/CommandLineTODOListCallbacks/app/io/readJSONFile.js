@@ -6,5 +6,6 @@ const readJSONFile = (fileName, callback) => {
     callback(err, data)
   })
 }
+
 module.exports = readJSONFile;
 

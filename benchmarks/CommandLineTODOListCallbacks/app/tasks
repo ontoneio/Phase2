@@ -1,8 +1,40 @@
 #!/usr/bin/env node
 const getState = require('./states/getState.js')
 const setState = require('./states/setState.js')
+const checkJSONFileExists = require('./io/checkJSONFileExists.js')
+const list = require('./list.js')
+const add = require('./add.js')
+const complete = require('./complete.js')
+const deleteX = require('./deleteX.js')
 
-// check if the file exists 
+let command = process.argv[2]
+let args = process.argv[3]
+
+
+
+switch(command) {
+  case 'list':
+     list()
+  break;
+  case 'add': 
+    add(args, (err) => {
+      if(err) throw err
+    })
+  break;
+  case 'complete': 
+    complete(Number(args), (err) => {
+      if(err) throw err
+    })
+  break;
+  case 'delete': 
+    deleteX(Number(args), (err) => {
+      if(err) throw err
+    })
+  break;
+}
+
+
+
 
 //Write a function to check if a file exists, if it doesn't create one 
 

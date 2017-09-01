@@ -8,9 +8,12 @@ const complete = (taskID, callback) => {
     if (completeTaskIndex === -1) {
       callback(new Error('Task Not Found'))
     } else {
+      // let taskId = data.incompleteTasks[completeTaskIndex].id;
       data.completeTasks.push(data.incompleteTasks.splice(completeTaskIndex, 1)[0])
       setState(data, (err) => {
         if (err) throw err
+        
+        // console.log(`Completed Task ${taskId}`)
         callback(null)
       })
     }

@@ -15,13 +15,13 @@ const deleteX = require('../app/deleteX.js')
 describe('Function checkJSONFileExists', function () {
 
   beforeEach(function (done) {
-    fs.unlink(pathToTaskJSON, (err) => {
+    fs.unlink(pathToTaskJSON, function (err) {
       done()
     })
   })
 
   it('Passes the error to the call back if the file is not found', function (done) {
-    checkJSONFileExists((err, stat) => {
+    checkJSONFileExists(function(err, stat) {
       expect(err).to.not.equal(null)
       done()
     })
@@ -32,7 +32,7 @@ describe('Function checkJSONFileExists', function () {
       tasks: []
     }, function (err) {
       if (err) throw err
-      checkJSONFileExists((err, stat) => {
+      checkJSONFileExists(function(err, stat) {
         expect(err).to.equal(null)
         done()
       })
