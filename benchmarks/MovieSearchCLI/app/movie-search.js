@@ -1,47 +1,42 @@
-// Can make HTTP requests from Node
-// Can write Asynchronous code in JavaScript and Node
-// Can extract data from HTML in Node
-// Can scrape a web page in Node
-//=====
+// http://www.imdb.com/find?ref_=nv_sr_fn&q=findingnemo&s=all
 
+// table findList
 
-const https = require('https')
-const fs = require('fs')
-
+// findList > findResult > result_text a 
+var $ = require('cheerio')
+let http = require('http');
 let options = {
-  hostname: "en.wikipedia.org",
-  port: 443,
-  path: "/wiki/George_Washington",
-  method: "GET"
-}
+  host: 'www.imdb.com',
+  path: '/find?ref_=nv_sr_fn&q=findingnemo&s=all'
+};
 
-let req = https.request(options, (res) => {
-  
-  let responseBody = '';
-  console.log(`Server Status ${res.statusCode}`)
-  console.log(`Response Headers %j`, res.headers)
-})
+let req = http.get(options, function(res) {
+  // console.log('STATUS: ' + res.statusCode);
+  // console.log('HEADERS: ' + JSON.stringify(res.headers));
+
+  // Buffer the body entirely for processing as a whole.
+  let bodyChunks = [];
+  res.on('data', function(chunk) {
+    // You can process streamed parts here...
+    bodyChunks.push(chunk);
+  }).on('end', function() {
+    let body = Buffer.concat(bodyChunks);
+    // cheerio.load(body.toString())
+    let content = `<ul id="fruits">
+  <li class="apple">Apple</li>
+  <li class="orange">Orange</li>
+  <li class="pear">Pear</li>
+</ul>`
+    cheerio.load(content)
+    let output = $('#me').text()
+    console.log('Here come the pain')
+    console.log(output)
+  })
+});
+
+req.on('error', function(e) {
+  console.log('ERROR: ' + e.message);
+});
 
 
-
-
-
-
-
-
-
-//=======
-// const http = require('http');
-
-// const hostname = '127.0.0.1';
-// const port = 3000;
-
-// const server = http.createServer((req, res) => {
-//   res.statusCode = 200;
-//   res.setHeader('Content-Type', 'text/plain');
-//   res.end('Hello World\n');
-// });
-
-// server.listen(port, hostname, () => {
-//   console.log(`Server running at http://${hostname}:${port}/`);
-// });
+$ = cheerio.load('<h2 class = "title">Hello world</h2>');
