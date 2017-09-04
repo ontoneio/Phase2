@@ -10,6 +10,36 @@ let options = {
 
 const sendGETRequest = (options, callback) => http.get(options, callback)
 
+const getMoviesList = ($, callback) => {
+  let movies = []
+  $('td.result_text').each(function (index, element) {
+    movies.push($(this).text())
+  });
+  callback(trimMovieList(movies))
+}
+
+// const getMoviesList = function($) {
+//   // console.log(`In getMoviesList($) the value of $ is ${$}`)
+//   let movies = []
+//   $('td.result_text').each((i, e) => {
+//     console.log(`Pushing to array --> ${$(this).text()}`, `${$(this).text()}`)
+//     movies.push($(this).text())
+//   })//movies.push($(this).text()));
+//   // console.log(`The movie list is ${movies}`)
+//   return trimMovieList(movies)
+// }
+
+// Slice 2 items from the end 
+// For each movie title get rid of everything after '-' 
+const trimMovieList = movies => movies.slice(0, -2).map(movie => movie.slice(0, movie.indexOf('-')))
+// const trimMovieList = movies => {
+//   movies = movies.slice(0, -2).map(movie => movie.slice(0, movie.indexOf('-')))
+//   return movies
+// }
+
+const printMovies = movies => movies.forEach(movie => console.log(`${movie}\n`))
+
+
 
 
 const req = sendGETRequest(options, (res) => {
@@ -28,20 +58,9 @@ const req = sendGETRequest(options, (res) => {
 
 })
 
-const getMoviesList = ($, callback) => {
-  let movies = []
-  $('td.result_text').each(function (index, element) {
-    movies.push($(this).text())
-  });
-  callback(movies)
-}
 
-const printMovies = movies => {
-  //Slice 2 items from the end ->Unnecessary Info
-  //For each movie title get rid of everything after '-' ->Unnecessary Info
-  movies = movies.slice(0, -2).map( movie => movie.slice(0, movie.indexOf('-')))
-  movies.forEach( movie => console.log(`${movie}\n`))
-}
+
+
 
 
 
