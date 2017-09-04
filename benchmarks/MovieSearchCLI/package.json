@@ -13,6 +13,8 @@
     "mocha": "^3.5.0"
   },
   "dependencies": {
-    "cheerio": "^1.0.0-rc.2"
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.15.4",
+    "request": "^2.81.0"
   }
 }

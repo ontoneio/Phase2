@@ -1,42 +1,55 @@
-// http://www.imdb.com/find?ref_=nv_sr_fn&q=findingnemo&s=all
+#!/usr/bin/env node
 
-// table findList
-
-// findList > findResult > result_text a 
-var $ = require('cheerio')
+var cheerio = require('cheerio')
 let http = require('http');
+
 let options = {
   host: 'www.imdb.com',
   path: '/find?ref_=nv_sr_fn&q=findingnemo&s=all'
 };
 
-let req = http.get(options, function(res) {
-  // console.log('STATUS: ' + res.statusCode);
-  // console.log('HEADERS: ' + JSON.stringify(res.headers));
-
-  // Buffer the body entirely for processing as a whole.
+let req = http.get(options, function (res) {
   let bodyChunks = [];
-  res.on('data', function(chunk) {
-    // You can process streamed parts here...
+
+  res.on('data', function (chunk) {
     bodyChunks.push(chunk);
-  }).on('end', function() {
-    let body = Buffer.concat(bodyChunks);
-    // cheerio.load(body.toString())
-    let content = `<ul id="fruits">
-  <li class="apple">Apple</li>
-  <li class="orange">Orange</li>
-  <li class="pear">Pear</li>
-</ul>`
-    cheerio.load(content)
-    let output = $('#me').text()
-    console.log('Here come the pain')
-    console.log(output)
   })
+
+  res.on('end', function () {
+    let body = Buffer.concat(bodyChunks);
+    var $ = cheerio.load(body);
+    let movies = []
+
+    $('td.result_text').each(function (index, element) {
+      movies.push($(this).text())
+    });
+
+    //Slice 2 items from the end ->Unnecessary Info
+    //For each movie title get rid of everything after '-' ->Unnecessary Info
+    movies = movies.slice(0, -2).map((movie) => {
+      let sliceIdx = movie.indexOf('-')
+      return movie.slice(0, sliceIdx)
+    })
+
+    //For each movie create an object in the form 
+    // { title: '', year: '', type: '' }
+    let moviesDetail = movies.map((movieText) => {
+      let movieInfo = movieText.split('(')
+      return {
+        title: movieInfo[0], 
+        year: `(${movieInfo[1]}`, 
+        type: movieInfo[2] === undefined ? ' ' : `(${movieInfo[2]}`
+      }  
+    })
+
+
+    console.log(moviesDetail)
+
+  })
+
 });
 
-req.on('error', function(e) {
+req.on('error', function (e) {
   console.log('ERROR: ' + e.message);
 });
 
-
-$ = cheerio.load('<h2 class = "title">Hello world</h2>');

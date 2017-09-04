@@ -121,6 +121,24 @@ For example & is reserved for use as a query string delimeter. : is also reserve
 
 Making an HTTP request is easy. Say you want to visit Reddit in your browser. All you need to do is launch your browser and enter the address. 
 
+### Processing Responses 
+
+So far we've been sending various requests and looking at the raw HTTP data sent back by the server. This raw data returned by the server is called a response. We'll spend this section analyzing the various components of an HTTP response. 
+
+- Status Code 
+> The first component we will look ar is the `HTTP Status code` The status code is a three digit number that the server sends back after receiving a request signifying the status of the request. The status text displayed next to status code provides the description of the code. It is listed under the Status column of the inspector. 
+
+The most common response status code you'll encounter is 200 which means the request was handled successfully. Other useful status codes are: 
+
+200: OK --> The request was handled successfully
+302: Found --> The requested resource has changed temporarily. Usually results in a redirect to another URL 
+404: Not Found --> The requested resource cannot be found. 
+500: Internal Server Error--> The server has encounter a generic error. 
+
+As a web developer, you should know the above response status codes and their associated meaning very well. 
+
+
+
 
 
 
