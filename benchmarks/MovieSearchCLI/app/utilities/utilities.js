@@ -1,5 +1,4 @@
 let http = require('http')
-let expect = require('chai').expect
 
 const sendGETRequest = (options, callback) => 
   http.get(options, callback)
