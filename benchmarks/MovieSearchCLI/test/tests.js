@@ -20,6 +20,7 @@ describe('#sendGETRequest', function () {
         body += chunk
       })
       res.on('end', function () {
+        const $ = cheerio.load(body)
         expect(body.slice(0, '<!doctype html>'.length)).to.equal('<!doctype html>')
         done()
       })
