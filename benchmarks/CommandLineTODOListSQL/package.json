@@ -1,0 +1,11 @@
+{
+  "name": "commandlinetodolistsql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "tasks.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}

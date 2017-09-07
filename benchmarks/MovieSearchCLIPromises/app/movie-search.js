@@ -2,7 +2,6 @@
 
 const cheerio = require('cheerio')
 
-let argument = process.argv.slice(2).join(' ')
 const {
   makeGETRequest, 
   trimMovieList, 
@@ -10,6 +9,7 @@ const {
   printMovieList
 } = require('./utilities/utilities.js')
 
+let argument = process.argv.slice(2).join(' ')
 
 let options = {
   host: 'www.imdb.com',
@@ -27,4 +27,3 @@ makeGETRequest(options)
   .catch(() => {
     console.log(`Promise Rejected`)
   })
-  
