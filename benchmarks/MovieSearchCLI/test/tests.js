@@ -21,18 +21,27 @@ describe('#sendGETRequest', function () {
       })
       res.on('end', function () {
         const $ = cheerio.load(body)
+        // CHECK <TITLE> to have 'Google'
         expect(body.slice(0, '<!doctype html>'.length)).to.equal('<!doctype html>')
         done()
       })
     })
   })
 
-  it('Throws an error if invalid url is supplied', function () {
+  it('Throws an error if invalid url is supplied', function (done) {
     //TODO
     options = {
       host: 'invalid.url',
       path: `/invalid/path`
     }
+    expect(function () {
+      sendGETRequest(options, function (res) {
+        done()
+      })
+      // throw new Error('hi')
+    }).to.throw()
+    // done()
+
   })
 
 })

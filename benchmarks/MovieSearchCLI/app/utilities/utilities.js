@@ -3,10 +3,10 @@ let http = require('http')
 const sendGETRequest = (options, callback) => 
   http.get(options, callback)
 
-const trimMovieList = movies =>
-  movies.slice(0, -2).map(movieTitle =>
+const trimMovieList = movies => {
+  return movies.slice(0, -2).map(movieTitle => 
     movieTitle.indexOf('-') === -1 ? movieTitle : movieTitle.slice(0, movieTitle.indexOf('-')))
-  
+}
 
 const printMovieList = movies =>
   movies.forEach(movie =>
