@@ -9,13 +9,7 @@ NBAPlayer.prototype.dunk = function() {
 }
 
 const curry = new NBAPlayer('Steph Curry', 'Warriors', 'PointGuard')
-
-// console.log(`The player is ${curry.name} ${curry.team} ${curry.pos}`)
 curry.dunk()
-
-// console.log(curry.__proto__) //
-// console.log(NBAPlayer.prototype) // 
-
 let output = curry.__proto__ === NBAPlayer.prototype
 
 console.log(output)
