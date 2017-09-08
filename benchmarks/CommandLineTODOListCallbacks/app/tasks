@@ -8,7 +8,7 @@ const complete = require('./complete.js')
 const deleteX = require('./deleteX.js')
 
 let command = process.argv[2]
-let args = process.argv[3]
+let args = process.argv.slice(3).join(' ')
 
 
 
@@ -32,10 +32,3 @@ switch(command) {
     })
   break;
 }
-
-
-
-
-//Write a function to check if a file exists, if it doesn't create one 
-
-//To test the function, create a test that deletes the file if exists 
