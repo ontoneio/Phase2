@@ -1,4 +1,5 @@
 const pg = require('./client.js')
+const list = require('./queries')
 
 const add = (taskDescription, callback) => {
 
@@ -17,19 +18,35 @@ const add = (taskDescription, callback) => {
     (
       '${taskDescription}', 
       'false'
-    );`,
-    (error) => {
+    );`, (error) => {
       if (error) {
         pg.end()
         return callback(error)
       }
-      console.log(`Task Added. Success!`)
-      pg.end()
+      console.log(`\nTask Added. Success!`)
       callback(null)
+      list(null, (error) => {
+        if (error) throw error
+        pg.end()
+      })
     }
   )
 }
 
+const completeAndDeleteHandler = (callback, taskId, status, error, row) => {
+  if (error)
+    return callback(error)
+  //ID DOES NOT EXIST IF ROW COUNT IS 0
+  if (row.rowCount === 0)
+    return callback(new Error('TASK ID DOES NOT EXIST...'))
+
+  console.log(`\nTask ${taskId} ${status}...`)
+  callback(null)
+  list(null, (error) => {
+    if (error) throw error
+    pg.end()
+  })
+}
 
 const complete = (taskId, callback) => {
   pg.query(
@@ -37,17 +54,8 @@ const complete = (taskId, callback) => {
     UPDATE tasks
     SET is_complete = 'true'
     WHERE id = ${taskId}
-    `,
-    (error, row) => {
-      if (error)
-        return callback(error)
-      //ID DOES NOT EXIST IF ROW COUNT IS 0
-      if (row.rowCount === 0)
-        return callback(new Error('TASK ID DOES NOT EXIST...'))
-
-      console.log(`Task ${taskId} completed...`)
-      pg.end()
-      callback(null)
+    `, (error, row) => {
+      completeAndDeleteHandler(callback, taskId, 'Completed', error, row)
     }
   )
 }
@@ -58,17 +66,8 @@ const deleteX = (taskId, callback) => {
     DELETE
     FROM tasks
     WHERE id = ${taskId};
-    `,
-    (error, row) => {
-      if (error)
-        return callback(error)
-      //ID DOES NOT EXIST IF ROW COUNT IS 0
-      if (row.rowCount === 0)
-        return callback(new Error('TASK ID DOES NOT EXIST...'))
-
-      console.log(`Task ${taskId} deleted...`)
-      pg.end()
-      callback(null)
+    `, (error, row) => {
+      completeAndDeleteHandler(callback, taskId, 'Deleted', error, row)
     }
   )
 }

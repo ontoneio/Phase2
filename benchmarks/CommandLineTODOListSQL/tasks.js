@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+const pg = require('./database/client.js')
+
 const {
   add,
   complete,
