@@ -1,20 +1,27 @@
 const pg = require('./client.js')
 
-const list = (callback) => {
+const paddedNum = num => num < 10 ? ` ${num}` : `${num}`
+
+const list = (args, callback) => {
   pg.query(
-    'SELECT * FROM tasks', (error, result) => {
+    `
+    SELECT id, description
+    FROM tasks
+    WHERE is_complete='false'
+     `, (error, result) => {
+      if (error)
+        return callback(error)
+
+      console.log(`\n| ID | Tasks`)
       result.rows.forEach(row => {
-        console.log(`${row.id} ${row.description} ${row.is_complete}`)
+        console.log(`| ${paddedNum(row.id)} |  ${row.description}`)
       })
-      callback(result.rows.length)
+      console.log(`You Have ${result.rows.length} Tasks\n`)
+      pg.end()
+      callback(null)
     }
   )
 
 }
 
 module.exports = list
-
-
-// list(function() {
-//   console.log(`Now printing list...`)
-// })

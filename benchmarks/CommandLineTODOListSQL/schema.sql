@@ -5,17 +5,3 @@ CREATE TABLE tasks (
   description varchar(255), 
   is_complete boolean
 );
-
-INSERT INTO tasks (
-  description, 
-  is_complete
-)
-VALUES
-(
-  'Do Homework', 
-  'false'
-), 
-(
-  'Exercise', 
-  'true'
-);

@@ -2,13 +2,12 @@ const pg = require('./client.js')
 
 const add = (taskDescription, callback) => {
 
-  if (typeof taskDescription !== 'string' || taskDescription.length === 0) {
+  if (taskDescription === undefined || taskDescription.length === 0) {
     pg.end()
-    throw new Error('Task description is required')
+    return callback(new Error('TASK DESCRIPTION IS REQUIRED'))
   }
 
-  pg.query
-  (
+  pg.query(
     `
     INSERT INTO tasks (
       description, 
@@ -18,39 +17,64 @@ const add = (taskDescription, callback) => {
     (
       '${taskDescription}', 
       'false'
-    );`, callback
+    );`,
+    (error) => {
+      if (error) {
+        pg.end()
+        return callback(error)
+      }
+      console.log(`Task Added. Success!`)
+      pg.end()
+      callback(null)
+    }
   )
 }
 
 
 const complete = (taskId, callback) => {
-  pg.query
-  (
+  pg.query(
     `
     UPDATE tasks
     SET is_complete = 'true'
     WHERE id = ${taskId}
-    `, function() {
-      callback(taskId)
+    `,
+    (error, row) => {
+      if (error)
+        return callback(error)
+      //ID DOES NOT EXIST IF ROW COUNT IS 0
+      if (row.rowCount === 0)
+        return callback(new Error('TASK ID DOES NOT EXIST...'))
+
+      console.log(`Task ${taskId} completed...`)
+      pg.end()
+      callback(null)
     }
   )
 }
 
 const deleteX = (taskId, callback) => {
-  pg.query
-  (
+  pg.query(
     `
     DELETE
     FROM tasks
     WHERE id = ${taskId};
-    `, function() {
-      callback(taskId)
+    `,
+    (error, row) => {
+      if (error)
+        return callback(error)
+      //ID DOES NOT EXIST IF ROW COUNT IS 0
+      if (row.rowCount === 0)
+        return callback(new Error('TASK ID DOES NOT EXIST...'))
+
+      console.log(`Task ${taskId} deleted...`)
+      pg.end()
+      callback(null)
     }
   )
 }
 
 module.exports = {
-  add, 
-  complete, 
+  add,
+  complete,
   deleteX
 }
