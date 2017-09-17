@@ -15,21 +15,29 @@ const args = process.argv.slice(3).join(' ')
 
 if(command === "list") {
   list(function(numOfTasks) {
-    console.log(`You have ${numOfTasks} Tasks`)
+    console.log(`You have ${numOfTasks} Tasks...`)
+    client.end()
   })
 } else if(command === "add") {
   add(args, function() {
-    console.log(`Successfully Added.`)
+    console.log(`Added. Success!`)
+    client.end()    
   })
 } else if(command === "complete") {
-
+  complete(args, function(taskId) {
+    console.log(`Task ${taskId} completed...`)
+    client.end()
+  })
 } else if(command === "delete") {
-
+  deleteX(args, function(taskId) {
+    consle.log(`Task ${taskId} deleted...`)
+    client.end()
+  })
 } else {
   console.log('Invalid command')
+  client.end()
 }
 
-// client.end()
 
 
 // console.log(list.toString())

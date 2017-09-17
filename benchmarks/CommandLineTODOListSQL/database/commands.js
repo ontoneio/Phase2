@@ -1,6 +1,12 @@
 const pg = require('./client.js')
 
 const add = (taskDescription, callback) => {
+
+  if (typeof taskDescription !== 'string' || taskDescription.length === 0) {
+    pg.end()
+    throw new Error('Task description is required')
+  }
+
   pg.query
   (
     `
@@ -12,10 +18,8 @@ const add = (taskDescription, callback) => {
     (
       '${taskDescription}', 
       'false'
-    )`
+    );`, callback
   )
-  callback()
-  process.exit(0)
 }
 
 
@@ -24,11 +28,10 @@ const complete = (taskId, callback) => {
   (
     `
     UPDATE tasks
-    SET is_complete = 'false'
+    SET is_complete = 'true'
     WHERE id = ${taskId}
-    `, () => {
+    `, function() {
       callback(taskId)
-      process.exit(0)
     }
   )
 }
@@ -40,9 +43,8 @@ const deleteX = (taskId, callback) => {
     DELETE
     FROM tasks
     WHERE id = ${taskId};
-    `, () => {
+    `, function() {
       callback(taskId)
-      process.exit(0)
     }
   )
 }
@@ -52,24 +54,3 @@ module.exports = {
   complete, 
   deleteX
 }
-
-// deleteX(2, (taskId) => {
-//   console.log(`Task ${taskId} is deleted`)
-// })
-
-//  UPDATE COMPANY SET SALARY = 15000 WHERE ID = 3;
-
-// add('Go to school', function() {
-//   console.log('successfully added!')
-// })
-
-
-// const getUserByEmail = (email, callback) => {
-//   pg.query('SELECT * FROM users WHERE email=$1 LIMIT 1', [email], (error, result) => {
-//     if(error) {
-//       callback(error)
-//     } else {
-//       callback(null, result.rows[0])
-//     }
-//   })
-// }
