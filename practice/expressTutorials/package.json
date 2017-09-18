@@ -1,0 +1,14 @@
+{
+  "name": "expresstutorials",
+  "version": "1.0.0",
+  "description": "* What is a framework? How is it different from a library?  - You call library, framework calls you.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.4"
+  }
+}
