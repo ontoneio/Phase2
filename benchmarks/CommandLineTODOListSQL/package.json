@@ -4,7 +4,9 @@
   "description": "",
   "main": "tasks.js",
   "scripts": {
-    "start": "createdb todolist && createdb todolist_test && psql todolist < schema.sql && psql todolist_test < schema.sql", 
+    "db-setup-production": "dropdb --if-exists todolist && createdb todolist && psql todolist < schema.sql", 
+    "db-setup-test": "dropdb --if-exists todolist_test && createdb todolist_test && psql todolist_test < schema.sql", 
+    "db-setup": "npm run db-setup-production && npm run db-setup-test", 
     "test": "mocha test/tests.js"
   },
   "author": "",
