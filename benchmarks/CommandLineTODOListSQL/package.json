@@ -4,7 +4,8 @@
   "description": "",
   "main": "tasks.js",
   "scripts": {
-    "test": "mocha"
+    "start": "createdb todolist && createdb todolist_test && psql todolist < schema.sql && psql todolist_test < schema.sql", 
+    "test": "mocha test/tests.js"
   },
   "author": "",
   "license": "ISC",
@@ -13,6 +14,6 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^3.5.0"
+    "mocha": "^3.5.3"
   }
 }

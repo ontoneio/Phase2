@@ -17,7 +17,6 @@ const list = (args, callback) => {
         console.log(`| ${paddedNum(row.id)} | ${row.description}`)
       })
       console.log(`You Have ${result.rows.length} Tasks\n`)
-      pg.end()
       callback(null)
     }
   )

@@ -4,7 +4,7 @@ const list = require('./queries')
 const add = (taskDescription, callback) => {
 
   if (taskDescription === undefined || taskDescription.length === 0) {
-    pg.end()
+    // pg.end()
     return callback(new Error('TASK DESCRIPTION IS REQUIRED'))
   }
 
@@ -20,15 +20,10 @@ const add = (taskDescription, callback) => {
       'false'
     );`, (error) => {
       if (error) {
-        pg.end()
         return callback(error)
       }
       console.log(`\nTask Added. Success!`)
       callback(null)
-      list(null, (error) => {
-        if (error) throw error
-        pg.end()
-      })
     }
   )
 }
@@ -42,10 +37,6 @@ const completeAndDeleteHandler = (callback, taskId, status, error, row) => {
 
   console.log(`\nTask ${taskId} ${status}...`)
   callback(null)
-  list(null, (error) => {
-    if (error) throw error
-    pg.end()
-  })
 }
 
 const complete = (taskId, callback) => {
