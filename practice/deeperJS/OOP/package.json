@@ -1,16 +1,14 @@
 {
-  "name": "part-1",
+  "name": "tictactoe",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "TicTacToe Game to be played in the console",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.18.1",
-    "express": "^4.15.4"
+    "readline-sync": "^1.4.7"
   }
 }
